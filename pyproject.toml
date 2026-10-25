@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "midisuite-linux"
+version = "1.0.0"
+description = "Independent Linux editor for the M-VAVE / SINCO SMC-Mixer"
+readme = "README.md"
+authors = [{ name = "Midi Suite contributors" }]
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = ["midi", "ble", "bluetooth", "smc-mixer", "m-vave", "sinco", "controller", "linux"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: End Users/Desktop",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio",
+    "Topic :: Multimedia :: Sound/Audio :: MIDI",
+]
+dependencies = [
+    "python-rtmidi>=1.5",
+    "PySide6>=6.5",
+    "dbus-fast>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+midisuite = "midisuite.cli:main"
+midisuite-gui = "midisuite.ui.app:main"
+
+[project.urls]
+Homepage = "https://github.com/Davilka/midisuite-linux.git"
+Repository = "https://github.com/Davilka/midisuite-linux.git"
+Issues = "https://github.com/Davilka/midisuite-linux/issues"
+Releases = "https://github.com/Davilka/midisuite-linux/releases"
+Documentation = "https://github.com/Davilka/midisuite-linux#readme"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

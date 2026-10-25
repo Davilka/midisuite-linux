@@ -1,0 +1,84 @@
+name: Bug report
+description: Report a reproducible problem with the editor or the device protocol
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a problem.  Please remove
+        personal data (Bluetooth address, local paths, device backups) from
+        logs before posting.
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: A clear description of the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Connect ...
+        2. Press ...
+        3. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: Installation
+      options:
+        - Standalone bundle from Releases
+        - Wheel / pip / pipx
+        - Source checkout
+    validations:
+      required: true
+  - type: dropdown
+    id: connection
+    attributes:
+      label: Connection
+      options:
+        - USB
+        - Bluetooth LE
+        - USB and BLE
+        - No device / UI only
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Midi Suite version
+      placeholder: "1.0.0 (or the commit hash)"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Distribution, desktop and Python version
+      placeholder: "Ubuntu 24.04, GNOME 46, Python 3.12"
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / Monitor output
+      description: Relevant output from the Monitor tab or the terminal.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I removed personal data from logs and screenshots.
+          required: true
+        - label: I searched existing issues for the same problem.
+          required: true

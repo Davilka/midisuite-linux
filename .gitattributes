@@ -1,0 +1,11 @@
+* text=auto eol=lf
+
+*.py text diff=python
+*.sh text eol=lf
+*.desktop text
+*.svg text
+*.md text
+*.png binary
+*.bin binary
+*.whl binary
+*.tar.gz binary

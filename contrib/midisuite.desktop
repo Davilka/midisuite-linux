@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Midi Suite
+GenericName=SMC-Mixer editor
+Comment=Edit the configuration of the M-VAVE / SINCO SMC-Mixer
+Exec=midisuite-gui
+Icon=midisuite
+Terminal=false
+Categories=AudioVideo;Audio;Midi;
+Keywords=midi;mixer;controller;smc;
