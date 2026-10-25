@@ -30,8 +30,9 @@ First public release.
   automatically.
 * Command-line interface for dumps, restores, raw block access and preset
   copying.
-* CI (Python 3.10–3.13) and a release workflow that publishes a wheel, sdist,
-  standalone Linux bundle and `SHA256SUMS`.
+* CI (Python 3.10–3.13) and a release workflow that publishes a wheel,
+  standalone Linux bundle and `SHA256SUMS` (GitHub provides the source
+  archives).
 
 ### Known limitations
 

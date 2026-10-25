@@ -129,9 +129,10 @@ jobs:
           print("GUI smoke test passed")
           PY
 
-      - name: Build wheel, sdist and standalone bundle
+      - name: Build wheel and standalone bundle
         env:
           MIDISUITE_UPDATE_REPO: ${{ github.repository }}
+          MIDISUITE_SKIP_SDIST: "1"
         run: scripts/build-bundle.sh "${{ steps.version.outputs.version }}"
 
       - name: Verify artifacts
@@ -150,7 +151,7 @@ jobs:
             echo
             echo "| asset | size |"
             echo "|---|---|"
-            for asset in dist/*.whl dist/midisuite_linux-*.tar.gz dist/midisuite-gui-linux-x86_64-*.tar.gz; do
+            for asset in dist/*.whl dist/midisuite-gui-linux-x86_64-*.tar.gz; do
               printf '| `%s` | %s |\n' "$(basename "$asset")" "$(du -h "$asset" | cut -f1)"
             done
           } >> "$GITHUB_STEP_SUMMARY"
@@ -163,7 +164,6 @@ jobs:
           retention-days: 7
           path: |
             dist/*.whl
-            dist/midisuite_linux-*.tar.gz
             dist/midisuite-gui-linux-x86_64-*.tar.gz
             dist/SHA256SUMS
 
@@ -203,7 +203,6 @@ jobs:
           prerelease: ${{ contains(needs.build.outputs.version, '-') }}
           files: |
             dist/*.whl
-            dist/midisuite_linux-*.tar.gz
             dist/midisuite-gui-linux-x86_64-*.tar.gz
             dist/SHA256SUMS
 

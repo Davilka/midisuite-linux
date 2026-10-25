@@ -48,6 +48,9 @@ dist/midisuite_linux-<version>.tar.gz
 
 Install the wheel with `pip install dist/*.whl`.
 
+The source distribution is useful for local testing.  The release workflow
+skips it because GitHub generates the source archives for a release itself.
+
 ## Build the standalone bundle
 
 The bundle is a self-contained directory built with PyInstaller (it includes
@@ -57,6 +60,10 @@ Python, PySide6 and python-rtmidi, so the target machine does not need Python):
 scripts/build-bundle.sh            # version from pyproject.toml
 scripts/build-bundle.sh 1.2.3      # explicit version
 ```
+
+By default the script also builds a source distribution.  Set
+`MIDISUITE_SKIP_SDIST=1` to build only the wheel and the bundle; the
+release workflow does this.
 
 Output:
 
@@ -133,16 +140,18 @@ git tag -a v1.0.0 -m "Midi Suite 1.0.0"
 git push origin v1.0.0
 ```
 
-The workflow runs the lint/tests, builds the wheel, the sdist and the
-standalone bundle, and creates a GitHub release named
-`Midi Suite 1.0.0` with these assets attached:
+The workflow runs the lint/tests, builds the wheel and the standalone
+bundle, and creates a GitHub release named `Midi Suite 1.0.0` with these
+assets attached:
 
 ```
 midisuite_linux-1.0.0-py3-none-any.whl
-midisuite_linux-1.0.0.tar.gz
 midisuite-gui-linux-x86_64-1.0.0.tar.gz
 SHA256SUMS
 ```
+
+GitHub adds the source code archives (`.zip` and `.tar.gz`) to every
+release automatically; the workflow does not build an sdist.
 
 Release notes are generated automatically from the commits since the previous
 tag.

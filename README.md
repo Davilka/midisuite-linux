@@ -108,18 +108,19 @@ midisuite raw "00 59 23 …"      # one raw packet, print the reply
 ## Building and releases
 
 ```bash
-scripts/build-bundle.sh            # wheel + sdist + standalone PyInstaller bundle
+scripts/build-bundle.sh            # wheel + sdist + standalone bundle (local build)
 ```
 
 The self-contained archive is written to
 `dist/midisuite-gui-linux-x86_64-<version>.tar.gz`.
 
 Pushing a tag `v1.0.0` runs `.github/workflows/release.yml`, which runs the
-tests, builds the wheel, the sdist and the standalone bundle and publishes
-them to GitHub Releases with a `SHA256SUMS` file.  Release notes are kept in
-[`CHANGELOG.md`](CHANGELOG.md).  A release can also be
-started manually from the Actions tab.  See [`docs/BUILD.md`](docs/BUILD.md)
-for details, local build instructions and troubleshooting.
+tests, builds the wheel and the standalone bundle and publishes them to
+GitHub Releases with a `SHA256SUMS` file.  GitHub attaches the source
+archives itself.  Release notes are kept in [`CHANGELOG.md`](CHANGELOG.md).
+A release can also be started manually from the Actions tab.  See
+[`docs/BUILD.md`](docs/BUILD.md) for details, local build instructions and
+troubleshooting.
 
 ## Notes on behaviour
 

@@ -2,11 +2,14 @@
 #
 # Build all release assets:
 #   dist/midisuite_linux-<version>-py3-none-any.whl
-#   dist/midisuite_linux-<version>.tar.gz        (sdist)
+#   dist/midisuite_linux-<version>.tar.gz        (sdist, optional)
 #   dist/midisuite-gui-linux-x86_64-<version>.tar.gz
 #   dist/SHA256SUMS
 #
 # Usage: scripts/build-bundle.sh [version]
+#
+# Set MIDISUITE_SKIP_SDIST=1 to skip the source distribution.  The release
+# workflow uses this because GitHub provides the source archive itself.
 #
 set -euo pipefail
 
@@ -35,8 +38,13 @@ python -m pip install --quiet --upgrade build pyinstaller
 rm -rf dist build/pyinstaller
 mkdir -p dist
 
-echo "==> wheel and sdist"
-python -m build --outdir dist
+if [ "${MIDISUITE_SKIP_SDIST:-0}" = "1" ]; then
+    echo "==> wheel (sdist skipped)"
+    python -m build --wheel --outdir dist
+else
+    echo "==> wheel and sdist"
+    python -m build --outdir dist
+fi
 
 echo "==> PyInstaller bundle"
 pyinstaller \
