@@ -169,10 +169,11 @@ Without it the updater stays disabled until a repository is set in
 
 ### Versioning
 
-The workflow rewrites `[project].version` in `pyproject.toml` from the tag
-before building, so the tag is the single source of truth for the release
-number.  `src/midisuite/__init__.py::__version__` is only used by the CLI
-`--version` output; keep it in sync when preparing a release.
+The workflow rewrites both `[project].version` in `pyproject.toml` and
+`src/midisuite/__init__.py::__version__` from the tag before building, so the
+tag is the single source of truth for the release number and the application
+reports the same version as the release.  The rewrite happens in the runner;
+the tagged commit itself is not modified.
 
 ### CI
 
