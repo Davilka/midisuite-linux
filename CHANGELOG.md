@@ -6,6 +6,14 @@ All notable changes to this project are documented here.  The format follows
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-29
+
+### Fixed
+
+* Settings are now committed to the mixer's flash.  Writing block 5 only
+  updated the live configuration; without the zero-length “Save Config”
+  write used by the vendor editor the changes were lost on power-off.
+
 ## [1.0.0] - 2026-10-26
 
 First public release.
@@ -43,5 +51,6 @@ First public release.
 * Vendor firmware/application updates are not implemented.
 * Only the SMC-Mixer is supported.
 
-[Unreleased]: https://github.com/Davilka/midisuite-linux/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/Davilka/midisuite-linux/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/Davilka/midisuite-linux/releases/tag/v1.0.1
 [1.0.0]: https://github.com/Davilka/midisuite-linux/releases/tag/v1.0.0

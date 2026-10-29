@@ -76,6 +76,7 @@ def cmd_restore(args) -> int:
         raise SystemExit(f"expected {USER_SIZE} bytes, got {len(data)}")
     with open_transport() as transport:
         transport.write_chunked(BLOCK_USER, 0, data)
+        transport.commit(BLOCK_USER)
     print(f"restored {args.input}")
     return 0
 

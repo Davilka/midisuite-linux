@@ -145,6 +145,16 @@ class BaseTransport:
             self.write(block, addr + offset, data[offset : offset + step])
             time.sleep(0.02)
 
+    def commit(self, block: int, addr: int = 0) -> None:
+        """Persist a block to the device's flash.
+
+        Writes update the live configuration immediately, but the device keeps
+        them in a RAM buffer.  The vendor editor flushes that buffer (its
+        “Save Config” button) by sending a **zero-length write** for the block;
+        without it the new settings disappear when the device is powered off.
+        """
+        self.request(protocol.build_write(block, addr, b""))
+
     def erase(self, block: int, addr: int) -> None:
         self.request(protocol.build_erase(block, addr))
 

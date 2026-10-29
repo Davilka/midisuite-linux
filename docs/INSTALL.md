@@ -138,7 +138,8 @@ midisuite dump cfg.json
    device is not listed yet.
 4. Press **Read from device**.
 5. Click a knob, fader or button on the panel and edit it on the right.
-6. Press **Save to device** to write the configuration back.
+6. Press **Save to device** to write the configuration back and commit it to
+   the device's flash, so it survives a power cycle.
 
 The device keeps two independent presets.  After **Read** the editor selects
 the slot the device is currently running (marked “active on device” in the
@@ -283,8 +284,17 @@ QT_QPA_PLATFORM=xcb midisuite-gui
 **The device answers but nothing changes**
 
 Press **Save to device** — edits are kept in memory until saved.  The status
-bar shows `saved to device` on success.  The editor writes the whole user
-block (6282 bytes), preserving bytes it did not touch.
+bar shows `saved and persisted to device` on success.  The editor writes the
+whole user block (6282 bytes), preserving bytes it did not touch, and then
+sends the zero-length write that commits it to flash.
+
+**Settings work until the mixer is power-cycled**
+
+This was a bug in 1.0.0: the editor wrote the live configuration but never
+committed it to flash.  Use **Save to device** in a build that includes the
+fix, or the equivalent `midisuite restore` / `midisuite reset` command; both
+now send the commit command.  Export the configuration first if you need to
+keep it.
 
 **Reset to a known state**
 

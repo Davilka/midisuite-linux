@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "midisuite-linux"
-version = "1.0.0"
+version = "1.0.1"
 description = "Independent Linux editor for the M-VAVE / SINCO SMC-Mixer"
 readme = "README.md"
 authors = [{ name = "Midi Suite contributors" }]

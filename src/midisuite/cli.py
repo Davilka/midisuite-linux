@@ -87,6 +87,7 @@ def cmd_restore(args) -> int:
         return 0
     with _open(args) as transport:
         transport.write_chunked(BLOCK_USER, 0, bytes(mixer.user))
+        transport.commit(BLOCK_USER)
     print(f"restored {path} to the device")
     return 0
 
@@ -98,6 +99,7 @@ def cmd_factory(args) -> int:
         return 0
     with _open(args) as transport:
         transport.write_chunked(BLOCK_USER, 0, bytes(mixer.user))
+        transport.commit(BLOCK_USER)
     print("factory defaults written")
     return 0
 
@@ -108,6 +110,7 @@ def cmd_copy_preset(args) -> int:
         source = mixer.preset(args.source - 1)
         mixer.set_preset(args.target - 1, source)
         transport.write_chunked(BLOCK_USER, 0, bytes(mixer.user))
+        transport.commit(BLOCK_USER)
     print(f"preset {args.source} copied to preset {args.target}")
     return 0
 
@@ -123,6 +126,8 @@ def cmd_put(args) -> int:
     data = bytes.fromhex(args.data.replace(" ", ""))
     with _open(args) as transport:
         transport.write(args.block, args.addr, data)
+        if args.block in (BLOCK_GLOBAL, BLOCK_USER):
+            transport.commit(args.block)
     print(f"wrote {len(data)} bytes to block {args.block} @ {args.addr:#x}")
     return 0
 

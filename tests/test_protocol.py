@@ -29,6 +29,14 @@ def test_read_request_vector():
     )
 
 
+def test_commit_is_zero_length_write():
+    packet = protocol.build_write(5, 0, b"")
+    assert packet == bytes.fromhex("00 59 22 08 00 00 05 00 00 00 00 00 00 00 fa")
+    parsed = protocol.Packet.parse(packet)
+    assert parsed.msg_type == protocol.MSG_WRITE
+    assert protocol.parse_memory_payload(parsed.payload) == (5, 0, 0, b"")
+
+
 def test_parse_read_reply():
     raw = bytes.fromhex("00 59 23 09 00 00 04 00 00 00 00 01 00 00 01 F9")
     packet = protocol.Packet.parse(raw)

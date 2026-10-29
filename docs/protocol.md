@@ -86,6 +86,24 @@ Reads larger than 1000 bytes are split into 1000-byte requests by the original
 application; the device answers each with one SysEx message of
 `15 + length` bytes.
 
+### Persisting changes (Save Config)
+
+A normal write updates the **live** configuration immediately, but block 5 is
+kept in a RAM buffer: the new values work until the mixer is powered off, then
+the previous content is loaded again.  The vendor editor's **Save Config**
+button flushes that buffer with a **zero-length write** for the block:
+
+```
+-> 00 59 22 08 00 00 05 00 00 00 00 00 00 00 fa
+<- 00 59 00 00 00 00 00 <chk>                 (ACK)
+```
+
+This is the same `0x22` message with `length = 0` and no data.  The address is
+`0`.  The device ACKs it and the current block content becomes persistent.
+The command is required after writing block 5; without it the editor shows the
+changes as applied but they are lost on power-off.  The original application
+sends it only when the user clicks **Save Config**, not after every edit.
+
 ## Memory map
 
 | block | contents | size |

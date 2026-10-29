@@ -588,6 +588,10 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage("writing…")
             QApplication.processEvents()
             self.transport.write_chunked(BLOCK_USER, 0, bytes(mixer.user))
+            # Writes are live immediately but remain in RAM until the device
+            # receives the zero-length "commit" write used by the vendor
+            # editor's Save Config button.
+            self.transport.commit(BLOCK_USER)
             if self.globals_dirty:
                 self.transport.write_chunked(BLOCK_GLOBAL, 0, bytes(mixer.globals))
         except (TransportError, ValueError, OSError, rtmidi.SystemError) as exc:
@@ -596,7 +600,7 @@ class MainWindow(QMainWindow):
             return
         self.dirty = False
         self.globals_dirty = False
-        self.statusBar().showMessage("saved to device", 4000)
+        self.statusBar().showMessage("saved and persisted to device", 4000)
 
     def _detect_active_preset(self) -> int | None:
         return self.mixer.active_preset if self.mixer is not None else None
